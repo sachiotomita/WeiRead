@@ -13,6 +13,14 @@ bin/
 gen/
 out/
 
+.idea/
+/.idea
+test/
+androidTest/
+/test
+/androidTest
+gradle
+
 # Gradle files
 .gradle/
 build/
