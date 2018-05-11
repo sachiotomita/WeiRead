@@ -5,8 +5,66 @@
     <string name="click_retry">click to retry!</string>
     <string name="sorry_no_data">sorry, no data so far!</string>
     <string name="no_network_check">no network link, please check!</string>
+    <string name="click_again_to_exist">click again to exist app!</string>
 
     <string name="customer_refused">customer refused the permission!</string>
     <string name="read_write_permission_defied">read and write permission defied!</string>
     <string name="go_to_set">go to set!</string>
+
+    <string name="community">community</string>
+    <string name="brief">brief</string>
+    <string name="setting">setting</string>
+    <string name="cache">cache</string>'
+    <string name="category">category</string>
+    <string name="chapter">第 %1$d 章(%2$d)</string>
+
+    <string name="night">night</string>
+    <string name="day">day</string>
+
+
+    <string name="close">close</string>
+    <string name="cancel">cancel</string>
+    <string name="done">done</string>
+    <string name="theme">theme</string>
+
+    <string name="about">about me</string>
+    <string name="about_me">Github：<a href="https://github.com/AldrichLL">AldrichLL</a></string>
+
+
+    <string name="sub_count">%1$d 项</string>
+    <string name="path">path:%1$s</string>
+    <string name="add_shelf">add_shelf</string>
+    <string name="add_shelves">add_shelf (%1$d)</string>
+    <string name="add_succeed">add_succeed %1$d books</string>
+
+
+    <string name="tip">tip</string>
+    <string name="sure">sure</string>
+
+    <string-array name="menu_net_book">
+        <item>delete</item>
+        <item>cache</item>
+    </string-array>
+
+    <string-array name="menu_local_book">
+        <item>delete</item>
+    </string-array>
+
+    <string name="resume">resume</string>
+    <string name="pause">pause</string>
+    <string name="wait">wait</string>
+    <string name="error">error</string>
+    <string name="finish">finish</string>
+
+    <string name="loading">loading</string>
+    <string name="waiting">waiting</string>
+    <string name="pausing">pausing</string>
+    <string name="complete">complete</string>
+    <string name="source_error">source_error</string>
+
+    <string name="chapter_scope">(%1$d-%2$d章)</string>
+    <string name="title_activity_login">login</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="about_content">此项目建立主要是对自己技术学习的总结。主要是对NodeJs后台知识的实践，此项目的数据是爬取追书神器的部分数据，然后在自己的服务器进行整理关联自己的用户系统。前前后后用了3个多月才算正式完成，主要是业余时间不是特别多，项目功能不多，实现了简单的登录、注册、阅读、收藏、下载等比较常用的功能。后面有时间的话可能会对数据源进行整合，争取多弄些书籍数据，如果大家有什么好的意见也欢迎联系我。</string>
+
 </resources>

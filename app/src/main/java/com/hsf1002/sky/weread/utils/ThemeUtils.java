@@ -1,5 +1,8 @@
 package com.hsf1002.sky.weread.utils;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+
 import com.hsf1002.sky.weread.R;
 import com.hsf1002.sky.weread.application.WeReadApplication;
 import com.hsf1002.sky.weread.widget.theme.Theme;
@@ -9,6 +12,13 @@ import com.hsf1002.sky.weread.widget.theme.Theme;
  */
 
 public class ThemeUtils {
+
+    public static int getThemeColor2Array(Context context, int attrRes) {
+        TypedArray typedArray = context.obtainStyledAttributes(new int[]{attrRes});
+        int color = typedArray.getColor(0, 0xffffff);
+        typedArray.recycle();
+        return color;
+    }
 
     public static int getThemeColor() {
         Theme theme = SharedPreUtils.getInstance().getCurrentTheme();

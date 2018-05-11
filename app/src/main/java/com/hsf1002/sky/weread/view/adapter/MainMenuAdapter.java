@@ -18,7 +18,7 @@ import java.util.List;
 public class MainMenuAdapter extends BaseQuickAdapter<MainMenuBean, BaseViewHolder> {
 
     public MainMenuAdapter(@Nullable List<MainMenuBean> data) {
-        super(R.layout.adapter_main_menu);
+        super(R.layout.adapter_main_menu, data);
     }
 
     @Override
