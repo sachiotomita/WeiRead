@@ -92,6 +92,24 @@ public class BaseActivity extends AppCompatActivity {
         toolbarMore.setVisibility(View.GONE);
     }
 
+    public void initThemeToolBar(String title, int iconRes, int moreRes, View.OnClickListener iconClickListener, View.OnClickListener moreClickListener)
+    {
+        initStatusBar();
+        AppCompatImageView toolbarMore = findViewById(R.id.iv_toolbar_more);
+        AppCompatImageView toolbarBack = findViewById(R.id.iv_toolbar_back);
+
+        TextView toobarTitle = findViewById(R.id.tv_toolbar_title);
+        toobarTitle.setSelected(true);
+        toobarTitle.setText(title);
+
+        toolbarBack.setImageResource(iconRes);
+        toolbarBack.setOnClickListener(iconClickListener);
+
+        toolbarMore.setVisibility(View.VISIBLE);
+        toolbarMore.setImageResource(moreRes);
+        toolbarMore.setOnClickListener(moreClickListener);
+    }
+
     private void initStatusBar()
     {
         statusBar = findViewById(R.id.status_bar);

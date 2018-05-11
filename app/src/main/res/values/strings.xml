@@ -5,4 +5,8 @@
     <string name="click_retry">click to retry!</string>
     <string name="sorry_no_data">sorry, no data so far!</string>
     <string name="no_network_check">no network link, please check!</string>
+
+    <string name="customer_refused">customer refused the permission!</string>
+    <string name="read_write_permission_defied">read and write permission defied!</string>
+    <string name="go_to_set">go to set!</string>
 </resources>

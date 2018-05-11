@@ -47,6 +47,8 @@ dependencies {
     implementation "com.afollestad.material-dialogs:core:${libs.md_dialog}"
     implementation "com.afollestad.material-dialogs:commons:${libs.md_dialog}"
 
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${libs.brvah}"
+
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:${libs.SmartRefreshLayout}"
     implementation "com.lai.weavey:loadinglayout:${libs.loadinglayout}"
 
