@@ -33,4 +33,6 @@ public class Constant {
     public static final int CONNECT_WRITE_TIMEOUT = 20;
     public static final String LOGGING_INTERCEPTOR_REQUEST = "Request";
     public static final String LOGGING_INTERCEPTOR_RESPONSE = "Response";
+
+    public static final String USERNAME = "username";
 }

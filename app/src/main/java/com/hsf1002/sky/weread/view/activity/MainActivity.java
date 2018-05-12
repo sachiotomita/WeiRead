@@ -21,14 +21,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.hsf1002.sky.weread.R;
+import com.hsf1002.sky.weread.constant.Constant;
 import com.hsf1002.sky.weread.db.entity.UserBean;
+import com.hsf1002.sky.weread.db.helper.UserHelper;
 import com.hsf1002.sky.weread.model.AppUpdateBean;
 import com.hsf1002.sky.weread.model.MainMenuBean;
 import com.hsf1002.sky.weread.utils.BaseUtils;
 import com.hsf1002.sky.weread.utils.SharedPreUtils;
 import com.hsf1002.sky.weread.utils.SnackBarUtils;
-import com.hsf1002.sky.weread.utils.SystemUtils;
 import com.hsf1002.sky.weread.utils.ThemeUtils;
 import com.hsf1002.sky.weread.utils.ToastUtils;
 import com.hsf1002.sky.weread.view.adapter.MainMenuAdapter;
@@ -47,6 +52,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hsf1002.sky.weread.constant.Constant.USERNAME;
 
 
 public class MainActivity extends BaseActivity implements ColorChooserDialog.ColorCallback, ISetting {
@@ -112,7 +119,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
 
         model = new VMSettingInfo(this, this);
         setBiddingView(R.layout.activity_main, NO_BINDING, model);
-        initThemeToolBar("classify", R.drawable.ic_classify, R.drawable.ic_search, v ->
+        initThemeToolBar(getToolBarTitleString(), R.drawable.ic_classify, R.drawable.ic_search, v ->
         {
             resideLayout.openPane();
         }, v ->
@@ -228,6 +235,13 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         return menuBeans;
     }
 
+    private String getToolBarTitleString()
+    {
+        String[] menuName = getResources().getStringArray(R.array.main_menu_name);
+
+        return menuName[currentFragment];
+    }
+
     private String getFragmentTagById(int index)
     {
         String[] tag = getResources().getStringArray(R.array.main_menu_name);
@@ -301,8 +315,8 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         switch (view.getId())
         {
             case R.id.avatar:
-                String username = SharedPreUtils.getInstance().getString("username", "");
-                if (username.equals(""))
+                String username = SharedPreUtils.getInstance().getString(USERNAME, "");
+                if (username.isEmpty())
                 {
                     startActivity(LoginActivity.class);
                 }
@@ -321,7 +335,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
                         .show();
                 break;
             case R.id.tv_setting:
-                if (name.equals(""))
+                if (name.isEmpty())
                 {
                     startActivity(LoginActivity.class);
                 }
@@ -454,13 +468,26 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     @Override
     protected void onResume() {
         super.onResume();
-        name = SharedPreUtils.getInstance().getString("username", "");
+        name = SharedPreUtils.getInstance().getString(USERNAME, "");
 
         try
         {
-            if (!name.equals(""))
+            if (!name.isEmpty())
             {
-                UserBean userBean;
+                UserBean userBean = UserHelper.getInstance().findUserByName(name);
+                Glide.with(context).load(Constant.BASE_URL + userBean.getIcon())
+                        .apply(new RequestOptions().transform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true))
+                        .into(avatar);
+                tvDesc.setText("");
+                tvSettings.setText(getString(R.string.setting));
+            }
+            else
+            {
+                Glide.with(context).load(R.mipmap.avatar)
+                        .apply(new RequestOptions().transform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true))
+                        .into(avatar);
+                tvDesc.setText(getString(R.string.not_login));
+                tvSettings.setText(getString(R.string.title_activity_login));
             }
         }
         catch (Exception e)
@@ -471,8 +498,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
+        //super.onBackPressed();        // must be deleted
         if (resideLayout.isOpen())
         {
             resideLayout.closePane();
