@@ -31,7 +31,7 @@ public class BaseViewModel {
     public Map tokenMap()
     {
         Map<String, Object> map = new HashMap<>();
-        map.put("access-token", SharedPreUtils.getInstance().getString("token", "WeRead"));
+        map.put("access-token", SharedPreUtils.getInstance().getString("token", "weyue"));
         map.put("app-type", "Android");
 
         return map;

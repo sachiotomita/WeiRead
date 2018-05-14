@@ -60,6 +60,11 @@ dependencies {
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:${libs.SmartRefreshLayout}"
     implementation "com.lai.weavey:loadinglayout:${libs.loadinglayout}"
 
+    implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:${libs.tablayout}"
+    implementation "com.lai.weavey:loadinglayout:${libs.loadinglayout}"
+    implementation "com.github.ybq:Android-SpinKit:${libs.loading}"
+
+
     // butterknife
     implementation "com.jakewharton:butterknife:${libs.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"

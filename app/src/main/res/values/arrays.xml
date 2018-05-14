@@ -24,4 +24,10 @@
         <item>@drawable/ic_feedback</item>
         <item>@drawable/ic_about</item>
     </string-array>
+
+    <string-array name="classify_pager_name">
+        <item>boy</item>
+        <item>girl</item>
+        <item>press</item>
+    </string-array>
 </resources>

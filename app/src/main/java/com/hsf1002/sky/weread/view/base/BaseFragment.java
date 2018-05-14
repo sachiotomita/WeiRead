@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class BaseFragment extends Fragment {
         return bindView;
     }
 
-    public View setContentView(ViewGroup container, int resId, int variable, BaseViewModel model)
+    public View setContentView(ViewGroup container, int resId, BaseViewModel model)
     {
         if (view == null)
         {

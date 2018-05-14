@@ -11,14 +11,14 @@ public class Constant {
 
     static
     {
-        //if (BuildConfig.DEBUG)
-        //{
-            BASE_URL = "http://192.168.5.87:3389";
-        //}
+        //if (!BuildConfig.DEBUG)
+        {
+            //BASE_URL = "http://192.168.5.87:3389";
+        }
         //else
-        //{
-            //BASE_URL = "http://www.luliangdev.cn";
-        //}
+        {
+            BASE_URL = "http://www.luliangdev.cn";
+        }
     }
 
     public static final int SPLASH_ACTIVITY_DURATION = 1000;
@@ -35,4 +35,8 @@ public class Constant {
     public static final String LOGGING_INTERCEPTOR_RESPONSE = "Response";
 
     public static final String USERNAME = "username";
+    public static final String TABNAME = "tabname";
+    public static final String TABINDEX = "tabindex";
+    public static final String TITLE_NAME = "titlename";
+    public static final String GENDER = "gender";
 }

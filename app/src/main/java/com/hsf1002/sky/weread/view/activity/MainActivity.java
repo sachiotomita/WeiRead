@@ -465,6 +465,11 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         }
     }
 
+    public void setLeftSlide(boolean isCanSlide)
+    {
+        resideLayout.setCanLeftSlide(isCanSlide);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
