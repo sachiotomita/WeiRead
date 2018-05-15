@@ -40,7 +40,7 @@ public class ClassifyFragment extends BaseFragment implements IClassifyBook {
     LoadingLayout loadingLayout;
 
     private String name;
-    private static int tabIndex;
+    //private int tabIndex;
     private String gender = "male";
     private ClassifyAdapter classifyAdapter;
     private VMBookClassify model;
@@ -69,14 +69,14 @@ public class ClassifyFragment extends BaseFragment implements IClassifyBook {
     public void initView() {
         super.initView();
         name = getArguments().getString(TABNAME);
-        tabIndex = getArguments().getInt(TABINDEX);
+        //tabIndex = getArguments().getInt(TABINDEX);
         model.bookClassify();
 
         classifyAdapter = new ClassifyAdapter(classifyBeansList);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(classifyAdapter);
         classifyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        classifyAdapter.setOnItemChildClickListener(((adapter, view, position) ->
+        classifyAdapter.setOnItemClickListener(((adapter, view, position) ->
         {
             Bundle bundle = new Bundle();
             bundle.putString(GENDER, gender);

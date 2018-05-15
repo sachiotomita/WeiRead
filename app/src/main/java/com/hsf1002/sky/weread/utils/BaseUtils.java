@@ -33,4 +33,8 @@ public class BaseUtils {
         }
         context.startActivity(intent);
     }
+
+    public static String format1Digits(Object d) {
+        return String.format("%.1f", Double.parseDouble(d+""));
+    }
 }

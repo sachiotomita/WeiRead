@@ -25,7 +25,7 @@ public class ClassifyAdapter extends BaseQuickAdapter<BookClassifyBean.ClassifyB
 
     @Override
     protected void convert(BaseViewHolder helper, BookClassifyBean.ClassifyBean item) {
-        helper.setText(R.id.tv_name, item.getName()).setText(R.id.tv_count, item.getBookCount() + "books");
+        helper.setText(R.id.tv_name, item.getName()).setText(R.id.tv_count, item.getBookCount() + " s");
 
         Glide.with(mContext).load(Constant.BASE_URL + item.getIcon())
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))

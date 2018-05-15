@@ -11,15 +11,16 @@ public class Constant {
 
     static
     {
-        //if (!BuildConfig.DEBUG)
+        if (!BuildConfig.DEBUG)
         {
-            //BASE_URL = "http://192.168.5.87:3389";
+            BASE_URL = "http://192.168.5.87:3389";
         }
-        //else
+        else
         {
             BASE_URL = "http://www.luliangdev.cn";
         }
     }
+    public static final String ZHUISHU_IMAGE_URL = "http://statics.zhuishushenqi.com";
 
     public static final int SPLASH_ACTIVITY_DURATION = 1000;
 
@@ -39,4 +40,9 @@ public class Constant {
     public static final String TABINDEX = "tabindex";
     public static final String TITLE_NAME = "titlename";
     public static final String GENDER = "gender";
+    public static final String TYPE = "type";
+
+    public static final String BOOKID = "bookid";
+    public static final String BOOKIMAGE = "bookImage";
+
 }
