@@ -36,6 +36,8 @@ public class Constant {
     public static final String LOGGING_INTERCEPTOR_RESPONSE = "Response";
 
     public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+
     public static final String TABNAME = "tabname";
     public static final String TABINDEX = "tabindex";
     public static final String TITLE_NAME = "titlename";

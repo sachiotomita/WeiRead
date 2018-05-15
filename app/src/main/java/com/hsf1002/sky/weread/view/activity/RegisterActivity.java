@@ -1,0 +1,14 @@
+package com.hsf1002.sky.weread.view.activity;
+
+import com.hsf1002.sky.weread.view.base.BaseActivity;
+
+/**
+ * Created by hefeng on 18-5-15.
+ */
+
+public class RegisterActivity extends BaseActivity implements IUserRegister {
+    @Override
+    public void registerSuccess() {
+
+    }
+}
