@@ -76,7 +76,36 @@
 
     <string name="register">register</string>
 
+    <string name="current_version_is_newest">current version is newest!</string>
 
-    <string name="about_content">此项目建立主要是对自己技术学习的总结。主要是对NodeJs后台知识的实践，此项目的数据是爬取追书神器的部分数据，然后在自己的服务器进行整理关联自己的用户系统。前前后后用了3个多月才算正式完成，主要是业余时间不是特别多，项目功能不多，实现了简单的登录、注册、阅读、收藏、下载等比较常用的功能。后面有时间的话可能会对数据源进行整合，争取多弄些书籍数据，如果大家有什么好的意见也欢迎联系我。</string>
+    <string name="about_content">
+        项目功能\
+        1 注册登录\
+        2 用户信息、用户密码、用户图像修改\
+        3 书籍分类\
+        4 本地书籍扫描\
+        5 书架\
+        6 书籍搜索（作者名或书籍名）\
+        7 书籍阅读（仅txt格式，暂不支持PDF等其他格式）\
+        8 阅读字体、背景颜色、翻页效果等设置\
+        9 意见反馈（反馈信息发送到我的邮箱）\
+        10 应用版本更新\
+\
+        使用开源库\
+        1 Rx2网络封装 RxHttpUtils\
+        2 6.0权限库 RxPermissions\
+        3 Glide图片加载库 Glide\
+        4 下拉刷新库 SmartRefreshLayout\
+        5 RecyclerView简化框架 BaseRecyclerViewAdapterHelper\
+        6 MD风格Dialog material-dialogs\
+        7 TabLaout选择 NavigationTabStrip\
+        8 数据加载动画 Android-SpinKit\
+        9 展开折叠TextView ExpandTextView\
+        10 流式标签 FlowLayout\
+        11 数据库 greenDAO\
+        12 版本更新进度条 NumberProgressBar\
+        13 图片选择器 TakePhoto\
+        14 项目首页- GanK -在基础上修改
+    </string>
 
 </resources>
