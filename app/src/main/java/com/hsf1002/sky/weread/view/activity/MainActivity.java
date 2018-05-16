@@ -533,4 +533,14 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void stopLoading() {
+
+    }
 }

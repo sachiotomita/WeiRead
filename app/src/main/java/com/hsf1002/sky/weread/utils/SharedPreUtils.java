@@ -38,6 +38,10 @@ public class SharedPreUtils {
         return  sInstance;
     }
 
+    public void sharedPreRemove(String key) {
+        editor.remove(key).apply();
+    }
+
     public int getInt(String key, int value)
     {
         return sharedPreferences.getInt(key, value);

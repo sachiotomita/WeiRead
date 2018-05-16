@@ -63,6 +63,7 @@ dependencies {
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:${libs.tablayout}"
     implementation "com.lai.weavey:loadinglayout:${libs.loadinglayout}"
     implementation "com.github.ybq:Android-SpinKit:${libs.loading}"
+    implementation "com.daimajia.numberprogressbar:library:${libs.number_progress}"
 
 
     // butterknife
