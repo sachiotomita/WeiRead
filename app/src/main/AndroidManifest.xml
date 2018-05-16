@@ -46,6 +46,9 @@
         <activity android:name=".view.activity.AboutAuthorActivity">
         </activity>
 
+        <activity android:name=".view.activity.FeedBackActivity">
+        </activity>
+
     </application>
 
 </manifest>

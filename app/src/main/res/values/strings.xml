@@ -74,6 +74,11 @@
     <string name="password_cannot_empty">password cannot be empty!</string>
     <string name="repassword_cannot_same">two password cannot be same!</string>
 
+    <string name="feedback">feedback</string>
+    <string name="feedback_success">feedback success!</string>
+    <string name="qq_cannot_empty">qq cannot be empty!</string>
+    <string name="feedback_cannot_empty">feedback cannot be empty!</string>
+
     <string name="register">register</string>
 
     <string name="current_version_is_newest">current version is newest!</string>

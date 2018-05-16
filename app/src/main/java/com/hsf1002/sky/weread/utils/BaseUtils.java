@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hsf1002.sky.weread.application.WeReadApplication;
@@ -36,5 +38,11 @@ public class BaseUtils {
 
     public static String format1Digits(Object d) {
         return String.format("%.1f", Double.parseDouble(d+""));
+    }
+
+    public static void hideInput(final EditText et) {
+        InputMethodManager imm = (InputMethodManager)
+                et.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 }
