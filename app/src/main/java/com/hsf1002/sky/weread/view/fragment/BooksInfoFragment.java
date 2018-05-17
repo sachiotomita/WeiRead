@@ -20,9 +20,7 @@ import com.hsf1002.sky.weread.view.activity.BookDetailActivity;
 import com.hsf1002.sky.weread.view.adapter.BookInfoAdapter;
 import com.hsf1002.sky.weread.view.base.BaseFragment;
 import com.hsf1002.sky.weread.viewmodel.fragment.VMBooksInfo;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+
 import com.weavey.loading.lib.LoadingLayout;
 
 import java.util.ArrayList;

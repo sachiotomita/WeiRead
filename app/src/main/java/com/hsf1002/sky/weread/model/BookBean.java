@@ -1,5 +1,7 @@
 package com.hsf1002.sky.weread.model;
 
+import com.hsf1002.sky.weread.db.entity.CollBookBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class BookBean implements Serializable {
     private List<String> tags;
     private List<String> gender;
 
-    //private CollBookBean mCollBookBean;
+    private CollBookBean mCollBookBean;
 
     public static class RatingBean implements Serializable {
         /**
@@ -257,5 +259,30 @@ public class BookBean implements Serializable {
 
     public void setGender(List<String> gender) {
         this.gender = gender;
+    }
+
+    public CollBookBean getCollBookBean()
+    {
+        if (mCollBookBean == null)
+        {
+            mCollBookBean = createCollBookBean();
+        }
+
+        return mCollBookBean;
+    }
+
+    public CollBookBean createCollBookBean() {
+        CollBookBean bean = new CollBookBean();
+        bean.set_id(get_id());
+        bean.setTitle(getTitle());
+        bean.setAuthor(bean.getAuthor());
+        bean.setShortIntro(getLongIntro());
+        bean.setCover(getCover());
+        bean.setLatelyFollower(getLatelyFollower());
+        bean.setRetentionRatio(Double.parseDouble(getRetentionRatio()));
+        bean.setUpdated(getUpdated());
+        bean.setChaptersCount(getChaptersCount());
+        bean.setLastChapter(getLastChapter());
+        return bean;
     }
 }

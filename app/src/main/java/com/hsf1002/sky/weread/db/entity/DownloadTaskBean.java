@@ -118,6 +118,29 @@ public class DownloadTaskBean {
     public synchronized void resetBookChapterList() {
         bookChapterList = null;
     }
+
+
+    public void setBookChapters(List<BookChapterBean> beans)
+    {
+        bookChapterList = beans;
+
+        for (BookChapterBean bean:bookChapterList)
+        {
+            bean.setTaskName(getTaskName());
+        }
+    }
+
+    public List<BookChapterBean> getBookChapters()
+    {
+        if (daoSession == null)
+        {
+            return bookChapterList;
+        }
+        else
+        {
+            return getBookChapterList();
+        }
+    }
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.

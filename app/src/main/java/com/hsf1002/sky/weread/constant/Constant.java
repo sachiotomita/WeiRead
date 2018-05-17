@@ -1,6 +1,9 @@
 package com.hsf1002.sky.weread.constant;
 
 import com.hsf1002.sky.weread.BuildConfig;
+import com.hsf1002.sky.weread.utils.FileUtils;
+
+import java.io.File;
 
 /**
  * Created by hefeng on 18-5-9.
@@ -21,6 +24,11 @@ public class Constant {
         }
     }
     public static final String ZHUISHU_IMAGE_URL = "http://statics.zhuishushenqi.com";
+
+    //BookCachePath (因为getCachePath引用了Context，所以必须是静态变量，不能够是静态常量)
+    public static String BOOK_CACHE_PATH = FileUtils.getCachePath() + File.separator
+            + "book_cache" + File.separator;
+
 
     public static final int SPLASH_ACTIVITY_DURATION = 1000;
 

@@ -21,8 +21,23 @@ public class CircleHeader extends View implements RefreshHeader{
     }
 
     @Override
-    public void onPullingDown(float percent, int offset, int headerHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int height, int extendHeight) {
 
+    }
+
+    @Override
+    public void onReleased(RefreshLayout refreshLayout, int height, int extendHeight) {
+
+    }
+
+    @Override
+    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
+
+    }
+
+    @Override
+    public boolean isSupportHorizontalDrag() {
+        return false;
     }
 
     @Override

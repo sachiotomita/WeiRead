@@ -58,6 +58,7 @@ dependencies {
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${libs.brvah}"
 
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:${libs.SmartRefreshLayout}"
+    implementation "com.scwang.smartrefresh:SmartRefreshHeader:${libs.SmartRefreshLayout}"
     implementation "com.lai.weavey:loadinglayout:${libs.loadinglayout}"
 
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:${libs.tablayout}"

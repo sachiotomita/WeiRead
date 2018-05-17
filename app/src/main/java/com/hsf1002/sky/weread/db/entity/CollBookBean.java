@@ -211,6 +211,23 @@ public class CollBookBean implements Serializable {
         bookChapterList = null;
     }
 
+    public void setBookChapters(List<BookChapterBean> beans)
+    {
+        bookChapterList = beans;
+    }
+
+    public List<BookChapterBean> getBookChapters()
+    {
+        if (daoSession == null)
+        {
+            return bookChapterList;
+        }
+        else
+        {
+            return getBookChapterList();
+        }
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
