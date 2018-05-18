@@ -21,6 +21,9 @@ import com.hsf1002.sky.weread.view.adapter.BookInfoAdapter;
 import com.hsf1002.sky.weread.view.base.BaseFragment;
 import com.hsf1002.sky.weread.viewmodel.fragment.VMBooksInfo;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.weavey.loading.lib.LoadingLayout;
 
 import java.util.ArrayList;
@@ -43,10 +46,10 @@ public class BooksInfoFragment extends BaseFragment implements IBookInfo{
     @BindView(R.id.rv_bookinfo)
     RecyclerView recyclerView;
 
-    //@BindView(R.id.refresh)
-    //SmartRefreshLayout smartRefreshLayout;
-    @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout smartRefreshLayout;
+    //@BindView(R.id.swipe_refresh)
+    //SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.loadinglayout)
     LoadingLayout loadingLayout;
@@ -89,7 +92,7 @@ public class BooksInfoFragment extends BaseFragment implements IBookInfo{
         gender = getArguments().getString(GENDER);
         type = getArguments().getString(TYPE);
 
-        /*smartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        smartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 ++page;
@@ -104,7 +107,7 @@ public class BooksInfoFragment extends BaseFragment implements IBookInfo{
         });
 
         smartRefreshLayout.autoRefresh();
-*/
+/*
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
             {
                 @Override
@@ -114,7 +117,7 @@ public class BooksInfoFragment extends BaseFragment implements IBookInfo{
                 }
             }
         );
-
+*/
         loadingLayout.setOnReloadListener( v -> model.getBooks(type, title, 1));
 
         bookInfoAdapter = new BookInfoAdapter(bookBeansList);
@@ -154,8 +157,8 @@ public class BooksInfoFragment extends BaseFragment implements IBookInfo{
 
     @Override
     public void stopLoading() {
-        //smartRefreshLayout.finishRefresh();
-        //smartRefreshLayout.finishLoadmore();
+        smartRefreshLayout.finishRefresh();
+        smartRefreshLayout.finishLoadmore();
     }
 
     @Override

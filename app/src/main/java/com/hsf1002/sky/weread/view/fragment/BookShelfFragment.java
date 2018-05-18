@@ -299,6 +299,10 @@ public class BookShelfFragment extends BaseFragment implements IBookShelf {
     @Override
     public void stopLoading() {
         //smartRefreshLayout.finishRefresh();
+        if (swipeRefreshLayout.isRefreshing())
+        {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

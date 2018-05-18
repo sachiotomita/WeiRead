@@ -34,6 +34,8 @@
     <string name="sub_count">%1$d 项</string>
     <string name="path">path:%1$s</string>
     <string name="add_shelf">add_shelf</string>
+    <string name="start_read">start read</string>
+    <string name="delete_from_shelf">delete from shelf</string>
     <string name="add_shelves">add_shelf (%1$d)</string>
     <string name="add_succeed">add_succeed %1$d books</string>
 

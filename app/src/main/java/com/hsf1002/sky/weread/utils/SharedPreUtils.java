@@ -47,7 +47,7 @@ public class SharedPreUtils {
         return sharedPreferences.getInt(key, value);
     }
 
-    public void putI(String key, int value)
+    public void putInt(String key, int value)
     {
         editor.putInt(key, value);
         editor.apply();

@@ -8,24 +8,24 @@
     android:orientation="vertical"
     app:isFirstVisible="true">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <!--android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"-->
 
-    <!--com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh"
         app:srlEnableLoadmore="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" -->
+        android:layout_height="match_parent" >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_bookinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    <!--/com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--/android.support.v4.widget.SwipeRefreshLayout-->
 
 </com.weavey.loading.lib.LoadingLayout>

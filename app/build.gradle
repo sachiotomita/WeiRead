@@ -66,6 +66,9 @@ dependencies {
     implementation "com.github.ybq:Android-SpinKit:${libs.loading}"
     implementation "com.daimajia.numberprogressbar:library:${libs.number_progress}"
 
+    implementation "com.lcodecorex:extextview:${libs.extextview}"
+
+    implementation "com.hyman:flowlayout-lib:${libs.flowlayout}"
 
     // butterknife
     implementation "com.jakewharton:butterknife:${libs.butterknife}"
