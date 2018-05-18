@@ -105,6 +105,9 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
     private String name;
     private VMSettingInfo model;
 
+    private static Fragment classifyFragment = null;
+    private static Fragment bookshelfFragment = null;
+    private static Fragment scanbookFragment = null;
     private static final int CLASSIFY = 0;
     private static final int BOOKSHELF = 1;
     private static final int SCANBOOK = 2;
@@ -152,7 +155,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
                 // classify
                 case 0:
                 {
-                    currentFragment = BOOKSHELF;
+                    currentFragment = CLASSIFY;
                     switchFragment(currentFragment);
                     title.setText(menuBeans.get(position).getName());
                     toolbarBack.setImageResource(menuBeans.get(position).getIcon());
@@ -256,7 +259,7 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
             return;
         }
 
-        if (getFragmentTagById(currentIndex).equals(currentFragmentTag))
+       /* if (getFragmentTagById(currentIndex).equals(currentFragmentTag))
         {
             return;
         }
@@ -306,6 +309,64 @@ public class MainActivity extends BaseActivity implements ColorChooserDialog.Col
         {
             fragmentTransaction.add(R.id.frame_container, newFragment, currentFragmentTag);
         }
+        fragmentTransaction.commit();
+        */
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // add three fragments
+        if (classifyFragment == null) {
+            classifyFragment = BookClassifyFragment.newInstance();
+        }
+        if (bookshelfFragment == null) {
+            bookshelfFragment = BookShelfFragment.newInstance();
+        }
+        if (scanbookFragment == null) {
+            scanbookFragment = ScanBookFragment.newInstance();
+        }
+
+        if (classifyFragment != null && !classifyFragment.isAdded()) {
+            fragmentTransaction.add(R.id.frame_container, classifyFragment);
+        }
+
+        if (bookshelfFragment != null && !bookshelfFragment.isAdded()) {
+            fragmentTransaction.add(R.id.frame_container, bookshelfFragment);
+        }
+
+        if (scanbookFragment != null && !scanbookFragment.isAdded()) {
+            fragmentTransaction.add(R.id.frame_container, scanbookFragment);
+        }
+
+        // hide three fragments
+        if (classifyFragment != null)
+        {
+            fragmentTransaction.hide(classifyFragment);
+        }
+
+        if (bookshelfFragment != null) {
+            fragmentTransaction.hide(bookshelfFragment);
+        }
+
+        if (scanbookFragment != null) {
+            fragmentTransaction.hide(scanbookFragment);
+        }
+
+        // show the current fragment
+        switch (currentIndex)
+        {
+            case CLASSIFY:
+                fragmentTransaction.show(classifyFragment);
+                break;
+            case BOOKSHELF:
+                fragmentTransaction.show(bookshelfFragment);
+                break;
+            case SCANBOOK:
+                fragmentTransaction.show(scanbookFragment);
+                break;
+            default:
+                break;
+        }
+
         fragmentTransaction.commit();
     }
 
