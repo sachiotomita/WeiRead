@@ -1,6 +1,6 @@
 package com.hsf1002.sky.weread.view.activity;
 
-import com.hsf1002.sky.weread.db.entity.BookChapterBean;
+import com.hsf1002.sky.weread.model.BookChaptersBean;
 import com.hsf1002.sky.weread.view.base.IBaseLoadView;
 
 /**
@@ -8,7 +8,7 @@ import com.hsf1002.sky.weread.view.base.IBaseLoadView;
  */
 
 public interface IBookChapters  extends IBaseLoadView{
-    void bookChapters(BookChapterBean bookChapterBean);
+    void bookChapters(BookChaptersBean bookChaptersBean);
     void finishChapters();
     void errorChapters();
 }

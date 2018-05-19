@@ -70,6 +70,8 @@ dependencies {
 
     implementation "com.hyman:flowlayout-lib:${libs.flowlayout}"
 
+    implementation "com.readystatesoftware.systembartint:systembartint:${libs.systembartint}"
+
     // butterknife
     implementation "com.jakewharton:butterknife:${libs.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${libs.butterknife}"

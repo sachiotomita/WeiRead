@@ -5,8 +5,13 @@ import android.os.Environment;
 import com.hsf1002.sky.weread.application.WeReadApplication;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 
 
 /**
@@ -40,6 +45,25 @@ public class FileUtils {
                     .getAbsolutePath();
         }
     }
+
+    public static long getDirSize(File file){
+        //判断文件是否存在
+        if (file.exists()) {
+            //如果是目录则递归计算其内容的总大小
+            if (file.isDirectory()) {
+                File[] children = file.listFiles();
+                long size = 0;
+                for (File f : children)
+                    size += getDirSize(f);
+                return size;
+            } else {
+                return file.length();
+            }
+        } else {
+            return 0;
+        }
+    }
+
 
     //递归删除文件夹下的数据
     public static synchronized void deleteFile(String filePath){
@@ -125,4 +149,55 @@ public class FileUtils {
         }
         return charset;
     }
+
+    public static File getFolder(String filePath){
+        File file = new File(filePath);
+        //如果文件夹不存在，就创建它
+        if (!file.exists()){
+            file.mkdirs();
+        }
+        return file;
+    }
+
+    public static String getFileContent(File file){
+        Reader reader = null;
+        String str = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new FileReader(file);
+            BufferedReader br = new BufferedReader(reader);
+            while ((str = br.readLine()) != null){
+                //过滤空语句
+                if (!str.equals("")){
+                    //由于sb会自动过滤\n,所以需要加上去
+                    sb.append("    "+str+"\n");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            IOUtils.close(reader);
+        }
+        return sb.toString();
+    }
+
+
+    //获取文件
+    public static synchronized File getFile(String filePath){
+        File file = new File(filePath);
+        try {
+            if (!file.exists()){
+                //创建父类文件夹
+                getFolder(file.getParent());
+                //创建文件
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
 }

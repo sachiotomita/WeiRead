@@ -2,6 +2,7 @@ package com.hsf1002.sky.weread.constant;
 
 import com.hsf1002.sky.weread.BuildConfig;
 import com.hsf1002.sky.weread.utils.FileUtils;
+import com.hsf1002.sky.weread.utils.StringUtils;
 
 import java.io.File;
 
@@ -57,5 +58,9 @@ public class Constant {
 
     public static final String BOOKID = "bookid";
     public static final String BOOKIMAGE = "bookImage";
+
+    public static final String SCREEN_AUTO_BRIGHTNESS_ADJ = "screen_auto_brightness_adj";
+    public static final String BATTERY_LEVEL = "level";
+    public static final String KEEP_BRIGHT = "keep bright";
 
 }
