@@ -31,6 +31,14 @@ public class BookChapterHelper {
         return sInstance;
     }
 
+    public void saveBookChaptersWithAsync(List<BookChapterBean> bookChapterBeans)
+    {
+        daoSession.startAsyncSession().runInTx(() ->
+        {
+           daoSession.getBookChapterBeanDao().insertOrReplaceInTx(bookChapterBeans);
+        });
+    }
+
     public void removeChapters(String book_id)
     {
         bookChapterBeanDao.queryBuilder().where(BookChapterBeanDao.Properties.BookId.eq(book_id))

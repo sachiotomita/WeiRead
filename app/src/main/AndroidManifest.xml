@@ -52,6 +52,9 @@
         <activity android:name=".view.activity.BookDetailActivity">
         </activity>
 
+        <activity android:name=".view.activity.ReadActivity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.hsf1002.sky.weread.view.activity;
 
 import android.animation.Animator;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,6 +15,7 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.sax.StartElementListener;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
@@ -24,8 +26,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.hsf1002.sky.weread.R;
@@ -52,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
 import static com.hsf1002.sky.weread.constant.Constant.BATTERY_LEVEL;
@@ -261,16 +266,78 @@ public class ReadActivity extends BaseActivity implements IBookChapters{
 
             @Override
             public void onCategoryFinish(List<TxtChapter> chapters) {
-
+                txtChapters.clear();
+                txtChapters.addAll(chapters);
+                readCategoryAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onPageCountChange(int count) {
-
+                readSeekBar.setEnabled(true);
+                readSeekBar.setMax(count - 1);
+                readSeekBar.setProgress(0);
             }
 
             @Override
             public void onPageChange(int pos) {
+                readSeekBar.post(() ->
+                {
+                   readSeekBar.setProgress(pos);
+                });
+            }
+        });
+
+        readSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (readBottom.getVisibility() == View.VISIBLE)
+                {
+                    readTipTv.setText((progress + 1) + "/" + (seekBar.getMax() + 1));
+                    readTipTv.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int pagePos = seekBar.getProgress();
+
+                if (pagePos != pageLoader.getPagePos())
+                {
+                    pageLoader.skipToPage(pagePos);
+                }
+
+                readTipTv.setVisibility(View.GONE);
+            }
+        });
+
+        readPage.setTouchListener(new PageView.TouchListener() {
+            @Override
+            public void center() {
+                toggleMenu(true);
+            }
+
+            @Override
+            public boolean onTouch() {
+                return !hideReadMenu();
+            }
+
+            @Override
+            public boolean prePage() {
+                return true;
+            }
+
+            @Override
+            public boolean nextPage() {
+                return true;
+            }
+
+            @Override
+            public void cancel() {
 
             }
         });
@@ -321,7 +388,7 @@ public class ReadActivity extends BaseActivity implements IBookChapters{
 
         readCategoryAdapter.setOnItemClickListener((adapter, view, position) ->
         {
-            setCategorySelect(0);
+            setCategorySelect(position);
             readDrawerLayout.closeDrawer(Gravity.START);
             pageLoader.skipToChapter(position);
         });
@@ -374,7 +441,7 @@ public class ReadActivity extends BaseActivity implements IBookChapters{
 
     private void hideSystemBar()
     {
-        StatusBarUtils.hideUnStableStatusBar(this);
+        StatusBarUtils.hideStableStatusBar(this);
 
         if (isFullScreen)
         {
@@ -394,15 +461,120 @@ public class ReadActivity extends BaseActivity implements IBookChapters{
     {
         if (ReadSettingManager.getInstance().isFullScreen())
         {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)appBarLayout.getLayoutParams();
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)readBottom.getLayoutParams();
             params.bottomMargin = ScreenUtils.getNavigationBarHeight();
             readBottom.setLayoutParams(params);
         }
         else
         {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)appBarLayout.getLayoutParams();
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)readBottom.getLayoutParams();
             params.bottomMargin = 0;
             readBottom.setLayoutParams(params);
+        }
+    }
+
+    private boolean hideReadMenu()
+    {
+        hideSystemBar();
+
+        if (appBarLayout.getVisibility() == View.VISIBLE)
+        {
+            toggleMenu(true);
+            return true;
+        }
+        else if (settingDialog.isShowing())
+        {
+            settingDialog.dismiss();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void toggleMenu(boolean flag)
+    {
+        initMenuAnim();
+
+        if (appBarLayout.getVisibility() == View.VISIBLE)
+        {
+            appBarLayout.startAnimation(topOutAnim);
+            readBottom.startAnimation(bottomOutAnim);
+
+            appBarLayout.setVisibility(View.GONE);
+            readBottom.setVisibility(View.GONE);
+
+            readTipTv.setVisibility(View.GONE);
+
+            if (flag)
+            {
+                hideSystemBar();
+            }
+        }
+        else
+        {
+            appBarLayout.setVisibility(View.VISIBLE);
+            readBottom.setVisibility(View.VISIBLE);
+
+            appBarLayout.startAnimation(topInAnim);
+            readBottom.startAnimation(bottomInAnim);
+
+            showSystemBar();
+        }
+    }
+
+    private void initMenuAnim()
+    {
+        if (topInAnim != null)
+        {
+            return;
+        }
+
+        topInAnim = AnimationUtils.loadAnimation(this, R.anim.slide_top_in);
+        topOutAnim = AnimationUtils.loadAnimation(this, R.anim.slide_top_out);
+        bottomInAnim = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_in);
+        bottomOutAnim = AnimationUtils.loadAnimation(this, R.anim.slide_bottom_out);
+
+        topOutAnim.setDuration(200);
+        bottomOutAnim.setDuration(200);
+    }
+
+    @OnClick({R.id.read_tv_pre_chapter, R.id.read_tv_next_chapter, R.id.read_tv_category, R.id.read_tv_night_mode, R.id.read_tv_setting, R.id.tv_toolbar_title})
+    public void onClick(View view)
+    {
+        switch (view.getId()) {
+            case R.id.read_tv_pre_chapter:
+                setCategorySelect(pageLoader.skipPreChapter());
+                break;
+            case R.id.read_tv_next_chapter:
+                setCategorySelect(pageLoader.skipNextChapter());
+                break;
+            case R.id.read_tv_category:
+                setCategorySelect(pageLoader.getChapterPos());
+                toggleMenu(true);
+                readDrawerLayout.openDrawer(Gravity.START);
+                break;
+            case R.id.read_tv_night_mode:
+                if (isNightNode)
+                {
+                    isNightNode = false;
+                }
+                else
+                {
+                    isNightNode = true;
+                }
+
+                pageLoader.setNightMode(isNightNode);
+                toggleNightMode();
+                break;
+            case R.id.read_tv_setting:
+                toggleMenu(false);
+                settingDialog.show();
+                break;
+            case R.id.tv_toolbar_title:
+                finish();
+                break;
+            default:
+                break;
         }
     }
 
@@ -418,16 +590,149 @@ public class ReadActivity extends BaseActivity implements IBookChapters{
 
     @Override
     public void bookChapters(BookChaptersBean bookChaptersBean) {
+        bookChapterBeanList.clear();
+        for (BookChaptersBean.ChatpterBean bean:bookChaptersBean.getChapters())
+        {
+            BookChapterBean chapterBean = new BookChapterBean();
+            chapterBean.setBookId(bookChaptersBean.getBook());
+            chapterBean.setLink(bean.getLink());
+            chapterBean.setTitle(bean.getTitle());
+            chapterBean.setUnreadble(bean.isRead());
+            bookChapterBeanList.add(chapterBean);
+        }
 
+        collBookBean.setBookChapters(bookChapterBeanList);
+
+        if (collBookBean.getIsUpdate() && isCollected)
+        {
+            pageLoader.setChapterList(bookChapterBeanList);
+            BookChapterHelper.getInstance().saveBookChaptersWithAsync(bookChapterBeanList);
+        }
+        else
+        {
+            pageLoader.openBook(collBookBean);
+        }
     }
 
     @Override
     public void finishChapters() {
+        if (pageLoader.getPageStatus() == PageLoader.STATUS_LOADING)
+        {
+            readPage.post(()->
+            {
+               pageLoader.openChapter();
+            });
+        }
 
+        readCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void errorChapters() {
+        if (pageLoader.getPageStatus() == PageLoader.STATUS_LOADING)
+        {
+            pageLoader.chapterError();
+        }
+    }
 
+    private void registerBrightObserver()
+    {
+        try
+        {
+            if (brightObserver != null)
+            {
+                if (!isRegistered)
+                {
+                    final ContentResolver cr = getContentResolver();
+                    cr.unregisterContentObserver(brightObserver);
+                    cr.registerContentObserver(BRIGHTNESS_MODE_URI, false, brightObserver);
+                    cr.registerContentObserver(BRIGHTNESS_URI, false, brightObserver);
+                    cr.registerContentObserver(BRIGHTNESS_ADJ_URI, false, brightObserver);
+                    isRegistered = true;
+                }
+            }
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+        }
+    }
+
+    private void unregisterBrightObserver()
+    {
+        try
+        {
+            if (brightObserver != null)
+            {
+                if (isRegistered)
+                {
+                    getContentResolver().unregisterContentObserver(brightObserver);
+                    isRegistered = false;
+                }
+            }
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if (appBarLayout.getVisibility() == View.VISIBLE)
+        {
+            if (!ReadSettingManager.getInstance().isFullScreen())
+            {
+                toggleMenu(true);
+                return;
+            }
+        }
+        else if (settingDialog.isShowing())
+        {
+            settingDialog.dismiss();
+            return;
+        }
+        else if (readDrawerLayout.isDrawerOpen(Gravity.START))
+        {
+            readDrawerLayout.closeDrawer(Gravity.START);
+            return;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBrightObserver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wakeLock.release();
+
+        if (isCollected)
+        {
+            pageLoader.saveRecord();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wakeLock.acquire();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterBrightObserver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+        pageLoader.closeBook();
     }
 }
