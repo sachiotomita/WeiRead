@@ -43,6 +43,11 @@
     <string name="tip">tip</string>
     <string name="sure">sure</string>
 
+    <string name="select_all">select all</string>
+    <string name="delete_file">delete file</string>
+    <string name="delete">delete</string>
+    <string name="delete_success">delete success</string>
+
     <string-array name="menu_net_book">
         <item>delete</item>
         <item>cache</item>
