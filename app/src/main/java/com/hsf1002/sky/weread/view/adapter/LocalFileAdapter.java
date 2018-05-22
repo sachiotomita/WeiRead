@@ -105,4 +105,36 @@ public class LocalFileAdapter extends BaseQuickAdapter<LocalFileBean, BaseViewHo
         }
         return false;
     }
+
+    public void setCheckedItem(int position) {
+        LocalFileBean bean = mData.get(position);
+
+        //如果是已加载的文件，则点击事件无效。
+        if (isFileLoaded(bean.getFile().getAbsolutePath()))
+        {
+            return;
+        }
+
+        if (bean.isSelect()) {
+            bean.setSelect(false);
+            --checkedCount;
+        } else {
+            bean.setSelect(true);
+            ++checkedCount;
+        }
+        notifyDataSetChanged();
+    }
+
+    public boolean getItemIsChecked(int pos) {
+        return mData.get(pos).isSelect();
+    }
+
+    public List<File> getAllFiles() {
+        List<File> files = new ArrayList<>();
+
+        for (LocalFileBean localFileBean : mData) {
+            files.add(localFileBean.getFile());
+        }
+        return files;
+    }
 }

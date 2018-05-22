@@ -51,7 +51,7 @@ public class ScanBookFragment extends BaseFragment {
     @BindView(R.id.file_system_btn_delete)
     Button deleteBtn;
 
-    private String[] titles = {};
+    private String[] titles = {"智能导入", "手机目录"};
     private List<Fragment> fragments;
     private BaseFileFragment currentFragment;
     private LocalBookFragment localBookFragment;

@@ -13,6 +13,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 
 
 /**
@@ -97,6 +103,47 @@ public class FileUtils {
         file.delete();
     }
 
+
+    //获取txt文件
+    public static List<File> getTxtFiles(String filePath){
+        List txtFiles = new ArrayList();
+        File file = new File(filePath);
+        //获取文件夹
+        File[] dirs = file.listFiles(
+                pathname -> {
+                    if (pathname.isDirectory() && !pathname.getName().startsWith(".")) {
+                        return true;
+                    }
+                    //获取txt文件
+                    else if(pathname.getName().endsWith(".txt")){
+                        txtFiles.add(pathname);
+                        return false;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+        );
+        //遍历文件夹
+        for (File dir : dirs){
+            //递归遍历txt文件
+            txtFiles.addAll(getTxtFiles(dir.getPath()));
+        }
+        return txtFiles;
+    }
+
+    //由于遍历比较耗时
+    public static Single<List<File>> getSDTxtFile(){
+        //外部存储卡路径
+        String rootPath = Environment.getExternalStorageDirectory().getPath();
+        return Single.create(new SingleOnSubscribe<List<File>>() {
+            @Override
+            public void subscribe(SingleEmitter<List<File>> e) throws Exception {
+                List<File> files = getTxtFiles(rootPath);
+                e.onSuccess(files);
+            }
+        });
+    }
 
     //获取文件的编码格式
     public static Charset getCharset(String fileName) {
