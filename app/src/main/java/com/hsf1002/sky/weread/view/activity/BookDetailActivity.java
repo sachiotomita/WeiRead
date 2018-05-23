@@ -140,7 +140,7 @@ public class BookDetailActivity extends BaseActivity implements IBookDetail{
                 public View getView(FlowLayout parent, int position, String s) {
                     TextView tv = (TextView) LayoutInflater.from(context).inflate(R.layout.tags_tv, tagFl, false);
                     tv.setText(s);
-                    return null;
+                    return tv;
                 }
             });
 
