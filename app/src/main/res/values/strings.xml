@@ -80,6 +80,16 @@
     <string name="id_cannot_empty">ID cannot be empty!</string>
     <string name="password_cannot_empty">password cannot be empty!</string>
     <string name="repassword_cannot_same">two password cannot be same!</string>
+    <string name="modify_password">modify password</string>
+    <string name="input_password">input password</string>
+
+    <string name="modify_username">modify username</string>
+    <string name="modify_verify">modify?</string>
+    <string name="nickname_cannot_empty">nickname cannot be empty!</string>
+    <string name="my_pledge_cannot_empty">my pledge cannot be empty!</string>
+
+    <string name="select_capture_way">select capture way</string>
+    <string name="change_avatar_success">change avatar success</string>
 
     <string name="feedback">feedback</string>
     <string name="feedback_success">feedback success!</string>

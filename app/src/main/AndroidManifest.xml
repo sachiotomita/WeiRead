@@ -55,6 +55,9 @@
         <activity android:name=".view.activity.ReadActivity">
         </activity>
 
+        <activity android:name=".view.activity.UserInfoActivity">
+        </activity>
+
     </application>
 
 </manifest>

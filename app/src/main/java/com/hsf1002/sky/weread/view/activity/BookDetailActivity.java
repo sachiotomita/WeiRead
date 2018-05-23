@@ -185,11 +185,11 @@ public class BookDetailActivity extends BaseActivity implements IBookDetail{
 
         if (bookBean.isCollect())
         {
-            addbookTv.setText("delete from shelf");
+            addbookTv.setText(getString(R.string.delete_from_shelf));
         }
         else
         {
-            addbookTv.setText("add to shelf");
+            addbookTv.setText(getString(R.string.add_shelf));
         }
 
         if (collBookBean == null)

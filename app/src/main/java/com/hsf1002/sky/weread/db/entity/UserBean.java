@@ -89,4 +89,12 @@ public class UserBean {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public List<BookBean> getLikebooks() {
+        return likebooks;
+    }
+
+    public void setLikebooks(List<BookBean> likebooks) {
+        this.likebooks = likebooks;
+    }
 }

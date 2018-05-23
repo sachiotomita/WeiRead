@@ -15,6 +15,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 
     dataBinding {
         enabled = true
@@ -71,6 +74,10 @@ dependencies {
     implementation "com.hyman:flowlayout-lib:${libs.flowlayout}"
 
     implementation "com.readystatesoftware.systembartint:systembartint:${libs.systembartint}"
+
+    implementation "com.jph.takephoto:takephoto_library:${libs.takephoto}"
+
+    implementation "com.getbase:floatingactionbutton:${libs.floatingactionbutton}"
 
     // butterknife
     implementation "com.jakewharton:butterknife:${libs.butterknife}"
