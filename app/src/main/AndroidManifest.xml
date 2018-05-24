@@ -58,6 +58,9 @@
         <activity android:name=".view.activity.UserInfoActivity">
         </activity>
 
+        <activity android:name=".view.activity.BookSearchActivity">
+        </activity>
+
     </application>
 
 </manifest>
