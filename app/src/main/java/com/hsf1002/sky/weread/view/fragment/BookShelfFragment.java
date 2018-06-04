@@ -204,10 +204,10 @@ public class BookShelfFragment extends BaseFragment implements IBookShelf {
         switch (which)
         {
             case "cache":
-                deleteBook(collBook, position);
+                downloadBook(collBook);
                 break;
             case "delete":
-                downloadBook(collBook);
+                deleteBook(collBook, position);
                 break;
             default:
                 break;

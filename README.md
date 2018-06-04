@@ -105,3 +105,112 @@ public void onClick(View view)
         }
     }
 ```
+
+## MaterialDialog
+```
+implementation "com.afollestad.material-dialogs:core:0.9.0.2"
+implementation "com.afollestad.material-dialogs:commons:0.9.0.2"
+```
+```
+new MaterialDialog.Builder(context)
+        .title(getResources().getString(R.string.tip))
+        .content("file not existed, delete?")
+        .positiveText(getResources().getString(R.string.sure))
+        .onPositive((dialog, which) -> deleteBook(collBookBean, position))
+        .negativeText(getResources().getString(R.string.cancel))
+        .onNegative((dialog, which) -> dialog.dismiss()).show();
+```
+```
+
+    private void openItemDialog(CollBookBean collBookBean, int position)
+    {
+        String[] menus = getResources().getStringArray(R.array.menu_local_book);
+
+        new MaterialDialog.Builder(context)
+                .title(collBookBean.getTitle())
+                .items(menus)
+                .itemsCallback((dialog, itemView, position1, text) -> onItemMenuClick(menus[position1], collBookBean, position))
+                .show();
+    }
+
+    private void onItemMenuClick(String which, CollBookBean collBook, int position)
+    {
+        switch (which)
+        {
+            case "cache":
+                downloadBook(collBook);
+                break;
+            case "delete":
+                deleteBook(collBook, position);
+                break;
+            default:
+                break;
+        }
+    }
+```
+```
+new MaterialDialog.Builder(context)
+                    .title("delete local book")
+                    .checkBoxPrompt("delete local file at the same time", false, (buttonView, isChecked) -> isCheck = isChecked)
+                    .positiveText(R.string.sure)
+                    .onPositive((dialog, which) ->
+                    {
+                        if (isCheck)
+                        {
+                            ...
+                        }
+                        else
+                        {
+                            ...
+                        }
+                        adapter.notifyDataSetChanged();
+                    })
+                    .negativeText(R.string.cancel)
+                    .onNegative((dialog, which) ->
+                    {
+                        dialog.dismiss();
+                    })
+                    .show();
+```
+## NavigationTabStrip
+```
+    implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4"
+```
+```
+<com.gigamole.navigationtabstrip.NavigationTabStrip
+                android:id="@+id/nts_classify"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:nts_active_color="@color/white"
+                app:nts_animation_duration="300"
+                app:nts_color="@color/white"
+                app:nts_corners_radius="1.5dp"
+                app:nts_factor="2.5"
+                app:nts_gravity="bottom"
+                app:nts_inactive_color="#c4c4c4"
+                app:nts_size="15sp"
+                app:nts_type="line"
+                app:nts_typeface="fonts/typeface.otf"
+                app:nts_weight="3dp"/>
+<android.support.v4.view.ViewPager
+                            android:id="@+id/vp_classify"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />                
+```
+```
+@BindView(R.id.nts_classify)
+NavigationTabStrip navigationTabStrip;
+
+@Override
+public void initView() {
+    for (int i=0; i< titles.length; ++i)
+    {
+        fragments.add(ClassifyFragment.newInstance(titles[i], navigationTabStrip.getTabIndex()));
+    }
+    ...
+    navigationTabStrip.setTitles(titles);
+    navigationTabStrip.setViewPager(viewPager);
+}
+```
