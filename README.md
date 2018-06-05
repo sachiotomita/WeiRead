@@ -7,32 +7,32 @@ implementation "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar"
 ```
 ```
 RxPermissions rxPermissions = new RxPermissions(this);
-                    rxPermissions.requestEach(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .subscribe(permission -> {
-                                if (permission.granted)
-                                {
-                                    MainActivity.this.switchFragment(position);
-                                    title.setText(menuBeans.get(position).getName());
-                                    toolbarBack.setImageResource(menuBeans.get(position).getIcon());
-                                    resideLayout.closePane();
-                                }
-                                else if (permission.shouldShowRequestPermissionRationale)
-                                {
-                                    ToastUtils.show(R.string.customer_refused);
-                                    resideLayout.closePane();
-                                }
-                                else
-                                {
-                                    resideLayout.closePane();
-                                    SnackBarUtils.makeShort(MainActivity.this.getWindow().getDecorView(), getString(R.string.read_write_permission_defied)).show(getString(R.string.go_to_set), new View.OnClickListener()
-                                    {
-                                        @Override
-                                        public void onClick(View v) {
-                                            BaseUtils.getAppDetailSettingIntent(context, getPackageName());
-                                        }
-                                    });
-                                }
-                            });
+              rxPermissions.requestEach(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                      .subscribe(permission -> {
+                          if (permission.granted)
+                          {
+                              MainActivity.this.switchFragment(position);
+                              title.setText(menuBeans.get(position).getName());
+                              toolbarBack.setImageResource(menuBeans.get(position).getIcon());
+                              resideLayout.closePane();
+                          }
+                          else if (permission.shouldShowRequestPermissionRationale)
+                          {
+                              ToastUtils.show(R.string.customer_refused);
+                              resideLayout.closePane();
+                          }
+                          else
+                          {
+                              resideLayout.closePane();
+                              SnackBarUtils.makeShort(MainActivity.this.getWindow().getDecorView(), getString(R.string.read_write_permission_defied)).show(getString(R.string.go_to_set), new View.OnClickListener()
+                              {
+                                  @Override
+                                  public void onClick(View v) {
+                                      BaseUtils.getAppDetailSettingIntent(context, getPackageName());
+                                  }
+                              });
+                          }
+                      });
 ```
 
 ## ColorChooserDialog
@@ -150,27 +150,74 @@ new MaterialDialog.Builder(context)
 ```
 ```
 new MaterialDialog.Builder(context)
-                    .title("delete local book")
-                    .checkBoxPrompt("delete local file at the same time", false, (buttonView, isChecked) -> isCheck = isChecked)
-                    .positiveText(R.string.sure)
-                    .onPositive((dialog, which) ->
-                    {
-                        if (isCheck)
-                        {
-                            ...
-                        }
-                        else
-                        {
-                            ...
-                        }
-                        adapter.notifyDataSetChanged();
-                    })
-                    .negativeText(R.string.cancel)
-                    .onNegative((dialog, which) ->
-                    {
-                        dialog.dismiss();
-                    })
-                    .show();
+            .title("delete local book")
+            .checkBoxPrompt("delete local file at the same time", false, (buttonView, isChecked) -> isCheck = isChecked)
+            .positiveText(R.string.sure)
+            .onPositive((dialog, which) ->
+            {
+                if (isCheck)
+                {
+                    ...
+                }
+                else
+                {
+                    ...
+                }
+                adapter.notifyDataSetChanged();
+            })
+            .negativeText(R.string.cancel)
+            .onNegative((dialog, which) ->
+            {
+                dialog.dismiss();
+            })
+            .show();
+```
+## LoadingLayout
+```
+implementation "com.lai.weavey:loadinglayout:1.3.1"
+```
+```
+<?xml version="1.0" encoding="utf-8"?>
+<com.weavey.loading.lib.LoadingLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loadinglayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:isFirstVisible="true">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_classify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</com.weavey.loading.lib.LoadingLayout>
+```
+```
+@BindView(R.id.loadinglayout)
+LoadingLayout loadingLayout;
+...
+@Override
+public void emptyData() {
+    loadingLayout.setStatus(LoadingLayout.Empty);
+}
+
+@Override
+public void errorData(String error) {
+    loadingLayout.setEmptyText(error).setStatus(LoadingLayout.Error);
+}
+
+@Override
+public void networkError() {
+    loadingLayout.setStatus(LoadingLayout.No_Network);
+}
+
+@Override
+public void getBookClassify(BookClassifyBean bookClassifyBean) {
+    loadingLayout.setStatus(LoadingLayout.Success);
+...
+}
 ```
 ## NavigationTabStrip
 ```
@@ -193,11 +240,11 @@ new MaterialDialog.Builder(context)
                 app:nts_typeface="fonts/typeface.otf"
                 app:nts_weight="3dp"/>
 <android.support.v4.view.ViewPager
-                            android:id="@+id/vp_classify"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />                
+                android:id="@+id/vp_classify"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />                
 ```
 ```
 @BindView(R.id.nts_classify)
@@ -213,4 +260,31 @@ public void initView() {
     navigationTabStrip.setTitles(titles);
     navigationTabStrip.setViewPager(viewPager);
 }
+```
+
+## ExpandTextView
+```
+implementation "com.lcodecorex:extextview:1.0.2"
+```
+```
+<com.lcodecore.extextview.ExpandTextView
+        android:id="@+id/tv_book_brief"
+        style="@style/book_detail_51.12"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="4dp"
+        android:text="发挥第三方空间都是开发商佛山地块附近的飞机螺丝钉机发牢骚附近立法监督法律解释法律监督了"
+        app:arrowAlign="right"
+        app:arrowPadding="8dp"
+        app:arrowPosition="below"
+        app:maxCollapsedLines="3"
+        />
+```
+```
+@BindView(R.id.tv_book_brief)
+TextView bookbriefTv;
+...
+bookbriefTv.setText(bookBean.getLongIntro());
 ```
