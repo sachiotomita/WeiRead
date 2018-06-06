@@ -1,7 +1,7 @@
  RxHttpUtils + RxPermissions + Glide + SmartRefreshLayout + BaseRecyclerViewAdapterHelper + Material-dialogs + NavigationTabStrip + ExpandTextView + FlowLayout + greenDAO + NumberProgressBar + TakePhoto + GanK + Android-SpinKit
 
 
-## RxPermissions
+## RxPermissions 6.0权限库
 ```
 implementation "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar"
 ```
@@ -35,7 +35,7 @@ RxPermissions rxPermissions = new RxPermissions(this);
                       });
 ```
 
-## ColorChooserDialog
+## ColorChooserDialog MD风格选择Dialog
 ```
 implementation "com.afollestad.material-dialogs:core:0.9.0.2"
 implementation "com.afollestad.material-dialogs:commons:0.9.0.2"
@@ -47,7 +47,7 @@ public void onClick(View view)
     switch (view.getId())
     {
       case R.id.tv_theme:
-    new ColorChooserDialog.Builder(this, R.string.theme)
+            new ColorChooserDialog.Builder(this, R.string.theme)
             .customColors(R.array.colors, null)
             .doneButton(R.string.done)
             .cancelButton(R.string.cancel)
@@ -106,7 +106,7 @@ public void onClick(View view)
     }
 ```
 
-## MaterialDialog
+## MaterialDialog MD风格Dialog
 ```
 implementation "com.afollestad.material-dialogs:core:0.9.0.2"
 implementation "com.afollestad.material-dialogs:commons:0.9.0.2"
@@ -172,7 +172,7 @@ new MaterialDialog.Builder(context)
             })
             .show();
 ```
-## LoadingLayout
+## LoadingLayout 进入动画加载
 ```
 implementation "com.lai.weavey:loadinglayout:1.3.1"
 ```
@@ -193,6 +193,22 @@ implementation "com.lai.weavey:loadinglayout:1.3.1"
         android:layout_height="wrap_content"/>
 
 </com.weavey.loading.lib.LoadingLayout>
+```
+```
+// 在Application中初始化  
+LoadingLayout.getConfig()
+        .setErrorText(getString(R.string.error_try_again))
+        .setEmptyText(getString(R.string.sorry_no_data))
+        .setNoNetworkText(getString(R.string.no_network_check))
+        .setErrorImage(R.drawable.ic_error_icon)
+        .setEmptyImage(R.drawable.ic_empty_error)
+        .setNoNetworkImage(R.drawable.ic_net_error)
+        .setAllTipTextColor(R.color.black)
+        .setAllTipTextSize(TIP_TEXT_SIZE)
+        .setReloadButtonText(getString(R.string.click_retry))
+        .setReloadButtonTextSize(TIP_TEXT_SIZE)
+        .setReloadButtonTextColor(R.color.black)
+        .setReloadButtonWidthAndHeight(RELOAD_BUTTON_WIDTH, RELOAD_BUTTON_HEIGHT);
 ```
 ```
 @BindView(R.id.loadinglayout)
@@ -219,7 +235,7 @@ public void getBookClassify(BookClassifyBean bookClassifyBean) {
 ...
 }
 ```
-## NavigationTabStrip
+## NavigationTabStrip 横向Tab选择
 ```
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4"
 ```
@@ -262,7 +278,7 @@ public void initView() {
 }
 ```
 
-## ExpandTextView
+## ExpandTextView 展开折叠TextView
 ```
 implementation "com.lcodecorex:extextview:1.0.2"
 ```
@@ -287,4 +303,150 @@ implementation "com.lcodecorex:extextview:1.0.2"
 TextView bookbriefTv;
 ...
 bookbriefTv.setText(bookBean.getLongIntro());
+```
+
+## SpinKitView 数据加载动画
+```
+implementation "com.github.ybq:Android-SpinKit:1.1.0"
+```
+```
+<?xml version="1.0" encoding="utf-8"?>
+<com.hsf1002.sky.weread.widget.theme.ColorRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rect_white"
+    android:id="@+id/crl_loading"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.CubeGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:SpinKit_Color="@color/white"
+        />
+
+</com.hsf1002.sky.weread.widget.theme.ColorRelativeLayout>
+```
+```
+public class LoadingHelper {
+    private static Dialog dialog = null;
+    private static LoadingHelper loadingHelper = null;
+    private SpinKitView mSpinKitView;
+    Context context;
+
+    public static LoadingHelper getInstance() {
+        if (loadingHelper == null) {
+            loadingHelper = new LoadingHelper();
+        }
+        return loadingHelper;
+    }
+
+    public void showLoading(Context context) {
+        this.context = context;
+        dialog = new Dialog(context, R.style.CustomDialog);
+        dialog.setContentView(R.layout.dialog_loading);
+        dialog.getWindow().getAttributes().gravity = Gravity.CENTER;
+        dialog.setCancelable(true);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.CENTER);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mSpinKitView = dialog.findViewById(R.id.spin_kit);
+        mSpinKitView.setColor(ThemeUtils.getThemeColor());
+        dialog.show();
+    }
+
+    public void hideLoading() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+}
+```
+```
+@Override
+public void showLoading() {
+    LoadingHelper.getInstance().showLoading(context);
+}
+
+@Override
+public void stopLoading() {
+    LoadingHelper.getInstance().hideLoading();
+}
+```
+
+## TakePhoto 照片选择器
+```
+implementation "com.jph.takephoto:takephoto_library:4.0.3"
+```
+```
+private TakePhoto takePhoto;
+private CropOptions cropOptions;
+private CompressConfig compressConfig;
+private Uri imageUri;
+private InvokeParam invokeParam;
+...
+takePhoto = getTakePhoto();
+cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(true).create();
+compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
+takePhoto.onEnableCompress(compressConfig, false);
+```
+```
+public TakePhoto getTakePhoto()
+{
+    if (takePhoto == null)
+    {
+        takePhoto = (TakePhoto)TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
+    }
+
+    return takePhoto;
+}
+```
+```
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+    getTakePhoto().onSaveInstanceState(outState);
+    super.onSaveInstanceState(outState);
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    getTakePhoto().onActivityResult(requestCode, resultCode, data);
+    super.onActivityResult(requestCode, resultCode, data);
+}
+```
+```
+private Uri getImageCropUri()
+{
+    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+    if (!file.getParentFile().exists())
+    {
+        file.getParentFile().mkdir();
+    }
+
+    return Uri.fromFile(file);
+}
+...
+switch (position)
+{
+    // pick from gallery
+    case 0:
+        dialog.dismiss();
+        imageUri = getImageCropUri();
+        takePhoto.onPickFromGalleryWithCrop(imageUri, cropOptions);
+        break;
+    // capturing
+    case 1:
+        dialog.dismiss();
+        imageUri = getImageCropUri();
+        takePhoto.onPickFromCaptureWithCrop(imageUri, cropOptions);
+        break;
+    default:
+        break;
+}
 ```
