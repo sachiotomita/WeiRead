@@ -1,5 +1,14 @@
  RxHttpUtils + RxPermissions + Glide + SmartRefreshLayout + BaseRecyclerViewAdapterHelper + Material-dialogs + NavigationTabStrip + ExpandTextView + FlowLayout + greenDAO + NumberProgressBar + TakePhoto + GanK + Android-SpinKit
 
+ * [RxPermissions 6.0权限库](#rxpermissions-60权限库)
+ * [ColorChooserDialog MD风格选择Dialog](#colorchooserdialog-md风格选择dialog)
+ * [MaterialDialog MD风格Dialog](#materialdialog-md风格dialog)
+ * [LoadingLayout 进入动画加载](#loadinglayout-进入动画加载)
+ * [NavigationTabStrip 横向Tab选择](#navigationtabstrip-横向tab选择)
+ * [ExpandTextView 展开折叠TextView](#expandtextview-展开折叠textview)
+ * [SpinKitView 数据加载动画](#spinkitview-数据加载动画)
+ * [TakePhoto 照片选择器](#takephoto-照片选择器)
+
 
 ## RxPermissions 6.0权限库
 ```
